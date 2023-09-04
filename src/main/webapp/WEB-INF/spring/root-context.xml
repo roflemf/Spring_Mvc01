@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+
+	<!-- Spring JDBC -->
+ 	<bean id="dataSource"
+ 		  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+ 		  
+ 		  <property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+ 		  <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
+ 		  <property name="username" value="night" />
+ 		  <property name="password" value="123456" />
+ 		  
+ 	</bean>
+ 	
+ 	<!-- 스프링과 mybatis 연결, mybatis-config.xml 파일 설정(데이터 저장빈 클래스 객체 별칭 이름을 관리)
+ 	mybatis 매퍼태그 xml 설정 (sql문 별도로 관리)-->
+ 	<bean id = "sqlSessionFactory" class = "org.mybatis.spring.SqlSessionFactoryBean">
+ 		<property name="dataSource" ref= "dataSource" />
+ 		<!-- setter() 메서드를 통한 의존성 주입. ref bean id dataSource를 호출하면서 mybatis에서
+ 			스프링을 통한 오라클 연결 -->
+ 			
+ 		<property name = "configLocation" value="classpath:/mybatis-config.xml" />
+ 		<!-- classpath 경로는 STS 가상경로에서는 src/main/resources 가 된다.  -->
+ 		
+ 		<property name = "mapperLocations" value="classpath:net/daum/mappers/*/*.xml" />
+ 		<!-- SQL문을 별도로 관리하는 mybatis 매퍼 xml 태그 경로 -->
+ 		
+ 			
+ 	</bean>
+
+		
+</beans>
