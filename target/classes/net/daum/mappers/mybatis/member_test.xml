@@ -5,5 +5,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="Member_Test">
+<!-- 매퍼태그 네임스페이스명을 Member_Test로 지정함, mybatis에서 쿼리문을 다루는 태그를 매퍼태그라고 한다.-->
+
+<!-- 회원저장 -->
+<insert id="mem_in" parameterType="member"><!-- parameterType은 전달인자 타입속성이고 
+member는 mybatis-config.xml에서 설정한 MemberVO에서 설정한 객체 별칭 이름이다. -->
+	insert into tbl_member (userid, userpw, username, email) 
+	values(#{userid},#{userpw},#{username},#{email})
+	<!-- #{userid}를 자바코드로 표현하면 member.getUserid(); 같은 역할을 한다. -->
+</insert>
 
 </mapper>

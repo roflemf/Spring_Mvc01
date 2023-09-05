@@ -10,10 +10,13 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	<annotation-driven /> 
+	<!-- 스프링 컨트롤러 클래스 선언 -> 애토네이션을 사용해서 작성할 수 있다는 것을 선언 -->
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<!-- 사이트 개발에 필요한 리소스 자원인 HTML, CSS, JavaScript, jQuery, 이미지 등이 들어가는 경로
+		;STS 가상 경로인 src/main/webapp/resource -->
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -24,7 +27,9 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="net.daum.controller" />
-	
+	<!--스프링 컨트롤러 클래스가 들어가는 경로
+		context:component-scan 인 오토스캔(자동으로 찾음)태그에 의해
+		 이 패키지에 만들어진 컨트롤러는 자동으로 스프링에서 인식-->
 	
 	
 </beans:beans>

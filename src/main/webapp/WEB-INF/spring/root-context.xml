@@ -40,6 +40,17 @@
  		
  			
  	</bean>
+ 	
+ 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+ 	destroy-method="clearCache"> 
+ 	<!--destroy-method="clearCache" 임시 메모리 캐시를 비워서 데이터 베이스 연결을 해제함-->
+ 		<constructor-arg name ="sqlSessionFactory" ref="sqlSessionFactory" />
+ 		<!-- 생성자를 통한 의존성 주입, ref 빈 아이디를 호출. -->
+ 	</bean>
+ 	
+ 	<context:component-scan base-package="net.daum.dao" />
+ 	<!-- net.duam.dao 패키지에 설정된  @Repository 이 설정된 모델 DAOImpl 클래스를 
+ 	스프링에서 자동으로 찾아 등록하여 인식하게 함-->
 
 		
 </beans>
