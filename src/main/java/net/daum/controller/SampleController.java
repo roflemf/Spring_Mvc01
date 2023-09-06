@@ -1,5 +1,7 @@
 package net.daum.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -68,4 +70,13 @@ public class SampleController {
 		return p;
 	}//doJSON()
 
+	@RequestMapping("/real_path")
+	public ModelAndView real_path(HttpServletRequest request ){
+		String path=request.getRealPath("/resources/SQL");
+		//System.out.println("실제경로:" +path);
+		
+		ModelAndView pm=new ModelAndView("path_view");
+		pm.addObject("path", path);
+		return pm;
+	}
 }
