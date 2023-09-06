@@ -10,6 +10,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   <typeAlias type="net.daum.vo.MemberVO" alias="member" />
   <!-- MemberVO 빈 클래스의 객체 별칭 이름을 member 로 함.
   	     이 별칭 이름은 mybatis 매퍼태그에서 참조하여 사용 -->
+  	     
+  <typeAlias type="net.daum.vo.BoardVO" alias="board" />
+  <!-- 별칭이름 -->
  
  </typeAliases>
 </configuration>
