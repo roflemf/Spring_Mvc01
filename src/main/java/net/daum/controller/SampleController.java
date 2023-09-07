@@ -78,5 +78,7 @@ public class SampleController {
 		ModelAndView pm=new ModelAndView("path_view");
 		pm.addObject("path", path);
 		return pm;
+		
+		//http://localhost:8092/controller/real_path 주소입력시 real_path 확인가능
 	}
 }

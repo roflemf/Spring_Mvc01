@@ -3,6 +3,33 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="board">
-
+<mapper namespace="board"><!-- 매퍼 네임스페이스명을 Board로 지정 -->
+	
+	<!-- 스프링 MVC 게시판 저장  -->
+	<insert id = "board_in" parameterType="board">
+	 <!-- parameterTyped은 전달인자 타입 속성, 
+	 board는 mybatis-config.xml에 설정한 BoardVO.java의 객체 별칭이름-->
+	  insert into tbl_board (bno,writer,title,content,regdate) 
+	  values(bno_seq.nextval,#{writer},#{title},#{content},sysdate)
+	  <!-- #{writer}를 자바로 표현시 board.getWrtier()와 같은 기능 -->
+	
+	</insert>
+	
+	<!-- 총 레코드 개수 -->
+	<select id = "board_count" resultType="int">
+	<!-- resultType은 반환 자료형 타입(생략불가) -->
+	 select count(*) from tbl_board <!-- count; 레코드 함수를 구하는 oracle 함수 --> 
+	</select>
+	
+	<!-- 게시물 목록 -->
+	<select id="board_list" parameterType="net.daum.vo.BoardVO" resultType="board">
+	 select * from 
+	  (select rowNum rNum,bno,writer,title,viewcnt,regdate
+	  from (select * from tbl_board order by bno desc))
+	  where rNum &gt; = #{startrow} and rNum &lt; = #{endrow}
+	  <!-- rowNum 컬럼은 오라클 테이블 생성시 기본으로 추가되는 것으로 
+	     최초 레코드 저장시 1부터 1씩 증가되는 일련번호값이 저장 
+	     &gt; 은 ~보다 크다(>), &lt; 은 ~보다 작다(<)-->
+	 
+	</select>
 </mapper>
