@@ -37,5 +37,34 @@ public class BoardDAOImpl implements BoardDAO {
 		//mybatis에서 selectList()메서드는 하나 이상의 레코드를 검색해서 컬렉션List로 반환한다.
 		//board_list는 board.xml에서 설정할 유일한 아이디명이다. 
 	}
+
+	@Override
+	public BoardVO getBoardCont(int bno) {
+	
+		return this.sqlSession.selectOne("board_control", bno);
+		//board.xml에서 설정한 유일한 아이디명
+	}//내용보기
+
+	@Override
+	public void updateHit(int bno) {
+		
+		this.sqlSession.update("board_hit", bno); 
+		//mybatis 에서 update()메서드는 레코드를 수정한다.
+		//board_hit는 board_xml에서 설정할 유일한 아이디명이다.
+		
+	}//조회수 증가
+
+	@Override
+	public void editBoard(BoardVO eb) {
+		this.sqlSession.update("board_edit",eb);
+		
+	}//수정
+
+	@Override
+	public void delBoard(int bno) {
+		this.sqlSession.delete("board_del", bno); 
+		//my batis에서 delete() 메서드는 레코드를 삭제
+		
+	}//게시물 삭제
 	
 }

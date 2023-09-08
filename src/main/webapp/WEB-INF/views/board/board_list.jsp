@@ -26,9 +26,9 @@
 	<tr>
 	 <th>${b.bno}</th> <%--b.bno는 b.getBno();와 같은 기능 --%>
 	 <th>
-	 <a href="/contoller/board/board_cont?bno=${b.bno}&page=${page}">${b.title}</a>
-	 <%-- board_cont?bno=번호&page=쪽번호가 get방식으로 bno에 번호, page에 쪽번호가 &구분기호로 구분해서
-	 2개의 파라미터 값이 get방식으로 전달된다. 이런 방식을 쿼리스트링 방식이라고 특히 쪽번호를 get으로 전달
+	 <a href="/controller/board/board_cont?bno=${b.bno}&page=${page}&state=cont">${b.title}</a>
+	 <%-- board_cont?bno=번호&page=쪽번호가 get방식으로 bno에 번호, page에 쪽번호, state=cont가 &구분기호로 구분해서
+	 3개의 파라미터 값이 get방식으로 전달된다. 이런 방식을 쿼리스트링 방식이라고 특히 쪽번호를 get으로 전달
 	 하는 이유는 책갈피 기능 구현 떄문이다.--%>
 	 
 	 </th>

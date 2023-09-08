@@ -32,4 +32,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	     &gt; 은 ~보다 크다(>), &lt; 은 ~보다 작다(<)-->
 	 
 	</select>
+	
+	<!-- 내용보기 -->
+	<select id= "board_control" resultType="net.daum.vo.BoardVO">
+	<!-- resultType="board"가능 
+		parameterType 생략가능-->
+		select * from tbl_board where bno=#{bno}
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id= "board_hit" parameterType="int"><!-- parameterType 생략가능 -->
+	 update tbl_board set viewcnt = viewcnt+1 where bno=#{bno}
+	</update>
+	
+	<!-- 게시판 수정 -->
+	<update id="board_edit" parameterType="board">
+	 update tbl_board set writer=#{writer}, title=#{title}, content=#{content}
+	 where bno=#{bno}
+	</update>
+	
+	<!-- 게시물 삭제 -->
+	<delete id ="board_del">
+		delete tbl_board where bno=#{bno} <!-- 쿼리문에서 from절 생략 가능 -->
+	</delete>
+	
 </mapper>
