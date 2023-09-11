@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   	     이 별칭 이름은 mybatis 매퍼태그에서 참조하여 사용 -->
   	     
   <typeAlias type="net.daum.vo.BoardVO" alias="board" />
+  <typeAlias type="net.daum.vo.ReplyVO" alias="reply" />
   <!-- 별칭이름 -->
  
  </typeAliases>
