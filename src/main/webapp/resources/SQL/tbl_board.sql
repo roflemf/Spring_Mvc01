@@ -46,4 +46,7 @@ nocache --임시 메모리 사용 안함
 nocycle; --시퀀스 최대값 번호 생성시 시퀀스 번호값 생성 중지(다시 1부터 반복 안함)
 
 
+--rno_seq 시퀀스 다음 번호값 확인
+select rno_seq.nextval as "rno_seq 시퀀스 다음번호값" from dual;
+
 commit;

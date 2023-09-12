@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <title>비동기식 아작스 댓글연습</title>
 <style type="text/css">
-#modDiv {
+#modDiv { /*댓글 수정폼 UI */
 	width: 300px;
 	height: 100px;
 	background-color: gray;
@@ -67,20 +67,22 @@
 
 		function getAllList() {
 			$.getJSON("/controller/replies/all/" + $bno,function(data) {
-								//get방식으로 JSON데이터 읽어오는 jQuery 비동기식 아작스 함수, 
-								//가져온 데이터는 data매개변수에 저장
-								$result = "";
-								$(data).each(
-								function() { //jQuery each()
-								$result += "<li data-rno='" + this.rno + "' class='replyLi'>"
-															+ this.rno
-															+ " : <span class='com' style='color:blue; font-weight:bold;'>'"
-															+ this.replytext
-															+ "</span> <button type='button'>댓글수정</button></li><br>";
-												});
+			//get방식으로 JSON데이터 읽어오는 jQuery 비동기식 아작스 함수, 
+			//가져온 데이터는 data매개변수에 저장
+			$result = "";
+			$(data).each(
+			function() { //jQuery each()
+			$result += "<li data-rno='" + this.rno + "' class='replyLi'>"
+						+ this.rno
+						+ " : <span class='com' style='color:blue; font-weight:bold;'>"
+						+ this.replytext
+						+ "</span> <button type='button'>댓글수정</button></li><br>";
+						});
 								$('#replies').html($result);
 								//html() jQuery함수는 해당 replies 아이디 영역에 문자와 태그를 함께 변경 적용
 							});
+			//""; html 문자열처리 (''도 되지만 바깥쪽에 있을경우 ""해야)
+			//'';  속성값
 
 		}//getAllList()
 
@@ -116,13 +118,13 @@
 		//댓글 수정화면
 		$('#replies').on('click', '.replyLi button', function() {
 			var reply = $(this).parent(); //부모 요소인 li태그를 구함
-			var rno=reply.attr('data-rno'); //댓글 번호를 구함 =>li 태그의 data-rno 속성값 구함
+			var rno=reply.attr("data-rno"); //댓글 번호를 구함 =>li 태그의 data-rno 속성값 구함
 			var replytext=reply.children('.com').text(); 
 			//댓글 내용을 구함 => li태그 자식 요소 중 클래스 선택자.com의 댓글 내용 문자만 text()함수로 구함.
 			
 			//text함수; 해당영역 문자 ()있으면 ;변경/적용 / ()없으면; 반환
 			
-			$('.model-rno').html(rno); //model-rno 클래스 선택자 영역에 댓글 번호를 변경 적용
+			$('.modal-rno').html(rno); //model-rno 클래스 선택자 영역에 댓글 번호를 변경 적용
 			$('#replytext').val(replytext); //text area 입력박스에 val()함수로 댓글 내용 변경,적용
 										    //(인자값 있으면);변경,적용  /(인자값)없으면; 입력박스에 댓글내용을 반환
 			$('#modDiv').show(1000);//댓글 수정화면 보이는 속도(숫자입력해도 조절 가능; ex)'slow','fast',1000(1초) 숫자클수록 느림)
@@ -136,6 +138,54 @@
 		function modDivClose() {
 			$('#modDiv').hide(1000);
 		}//modDivClose()
+		
+		//댓글 수정 완료
+		$('#replyModBtn').on('click',function(){
+			$rno = $('.modal-rno').html(); //댓글번호
+			$replytext = $('#replytext').val();//수정할 댓글 내용
+			
+			$.ajax({
+				type:'put', //보내는 방식
+				url:'/controller/replies/'+$rno,//서버 매핑주소
+				headers:{
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "PUT"
+				},
+				data:JSON.stringify({
+					replytext:$replytext
+				}),
+				dataType:'text',
+				success:function(result){
+					if(result == 'SUCCESS'){
+						alert('댓글이 수정 되었습니다!');
+						$('#modDiv').hide(300); //댓글 수정화면 닫기
+						getAllList();//댓글 목록함수 호출
+					}
+				}
+			});
+		});
+		
+		//댓글삭제
+		$('#replyDelBtn').on('click',function(){
+			$rno=$('.modal-rno').html(); //댓글 번호
+			
+			$.ajax({
+				type : 'delete',
+				url : '/controller/replies/'+$rno,
+				headers:{
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "DELETE"
+				},
+				dataType: "text",
+				success: function (data) {
+					if(data == 'SUCCESS'){
+						alert('댓글이 삭제되었습니다!');
+						$('#modDiv').hide('1000');
+						getAllList();//댓글 목록함수 호출
+					}
+				}
+			});
+		});
 	</script>
 </body>
 </html>

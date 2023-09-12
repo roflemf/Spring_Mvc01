@@ -13,6 +13,8 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
+	<aop:aspectj-autoproxy />
+	<!-- 스프링 AOP 자동 프록시 설정 -->
 
 	<!-- Spring JDBC -->
  	<bean id="dataSource"
@@ -41,6 +43,19 @@
  			
  	</bean>
  	
+ 	<!-- 트랜잭션 매니져(트랜잭션 관리자) 설정-->
+ 	<bean id = "transactionManager"
+  	 class= "org.springframework.jdbc.datasource.DataSourceTransactionManager">
+  	 
+  	 	<property name = "dataSource" ref = "dataSource" />
+  	 	<!-- setter()메서드를 통한 의존성 주입 (DI), 
+  	 	ref 빈아이디 dataSource를 호출해 오라클 연결 -->
+  	 
+  	 </bean>
+  	 <tx:annotation-driven /> 
+  	 <!-- 트랜잭션 설정 애노테이션  => @Transactional 을 통한 트랜잭션 관리 가능--> 
+ 	
+ 	
  	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
  	destroy-method="clearCache"> 
  	<!--destroy-method="clearCache" 임시 메모리 캐시를 비워서 데이터 베이스 연결을 해제함-->
@@ -53,13 +68,14 @@
  	스프링에서 자동으로 찾아 등록하여 인식하게 함-->
 	
 	
-	<context:component-scan base-package="net.daum.service">
+	<context:component-scan base-package="net.daum.service" />
 	<!-- 서비스 추가 목적 : 첫째, 컨트롤러와 모델 DAO 를 연결하는 중간 매개체 역할, 
 					     둘째, 고객의 추가요구 사항을 반영
-					     셋째, 스프링의 AOP를 통한 트렌젝션 적용이 핵심(데이터의 불일치 현상을 제거=>일관성 유지; 사이트신뢰도 ↑)   
-	
-	 -->
-
-	</context:component-scan>
+					     셋째, 스프링의 AOP를 통한 트렌젝션 적용이 핵심(데이터의 불일치 현상을 제거=>일관성 유지; 사이트신뢰도 ↑)  -->
+	 
+	 
+	 <aop:config /> <!-- AOP XML 환경설정 -->
+	 
+	 
 		
 </beans>

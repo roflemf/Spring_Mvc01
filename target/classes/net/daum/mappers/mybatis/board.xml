@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 게시물 목록 -->
 	<select id="board_list" parameterType="net.daum.vo.BoardVO" resultType="board">
 	 select * from 
-	  (select rowNum rNum,bno,writer,title,viewcnt,regdate
+	  (select rowNum rNum,bno,writer,title,viewcnt,regdate,replycnt
 	  from (select * from tbl_board order by bno desc))
 	  where rNum &gt; = #{startrow} and rNum &lt; = #{endrow}
 	  <!-- rowNum 컬럼은 오라클 테이블 생성시 기본으로 추가되는 것으로 
