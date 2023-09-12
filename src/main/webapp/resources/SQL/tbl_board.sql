@@ -10,6 +10,15 @@ create table tbl_board(
  
  select * from tbl_board order by bno desc;
  
+ 
+ --댓글 갯수를 저장할 replycnt 컬럼 추가
+ alter table tbl_board add(replycnt number(38) default 0);
+ 
+ --각 게시판 번호에 해당하는 실제 댓글 수를 카운트 해서 새롭게 추가된 replycnt 컬럼 레코드값으로 수정
+ update tbl_board set replycnt = (select count(rno)from tbl_reply where bno=tbl_board.bno) where bno >0;
+ commit;
+ 
+ 
  --bno_seq 시퀀스 생성
  create sequence bno_seq
  start with 1--1부터 시작

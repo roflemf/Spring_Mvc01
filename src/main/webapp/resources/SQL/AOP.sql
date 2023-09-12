@@ -22,6 +22,10 @@ create table tbl_message(
 
 select * from tbl_message order by mid asc;
 
+delete from tbl_message where mid=3;
+
+commit;
+
 --target 외래키 추가 설정
 alter table tbl_message add constraint tbl_message_targetid_fk
 foreign key(targetid) references tbl_user(uid2); 
@@ -32,3 +36,7 @@ start with 1 --1부터 시작
 increment by 1 --1씩 증가
 nocache --임시 메모리 사용 안함
 nocycle; --시퀀스 최대값 번호 발생 후 번호값 발생 안함. 다시 처음부터 반복안함
+
+
+--mid_no_seq 다음 시퀀스 번호값 확인
+select mid_no_seq.nextval as "mid_no_seq 다음 번호값" from dual; 
