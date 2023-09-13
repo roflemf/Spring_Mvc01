@@ -27,4 +27,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="reply_del" parameterType="int">
 	 delete from tbl_reply where rno=#{rno}
 	</delete>
+	
+	<!-- 댓글 번호 기준으로 게시판 번호값 구하기 -->
+	<select id = "reply_bno" resultType="int" parameterType="int">
+	 select bno from tbl_reply where rno=#{rno}
+	</select>
+	
 </mapper>

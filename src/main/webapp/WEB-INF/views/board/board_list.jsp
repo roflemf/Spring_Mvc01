@@ -30,6 +30,9 @@
 	 <%-- board_cont?bno=번호&page=쪽번호가 get방식으로 bno에 번호, page에 쪽번호, state=cont가 &구분기호로 구분해서
 	 3개의 파라미터 값이 get방식으로 전달된다. 이런 방식을 쿼리스트링 방식이라고 특히 쪽번호를 get으로 전달
 	 하는 이유는 책갈피 기능 구현 떄문이다.--%>
+	 <c:if test="${b.replycnt !=0}"> <%--댓글이 있는 경우 실행 --%>
+	 	<strong>[댓글 개수 : ${b.replycnt} 개]</strong>
+	 </c:if>
 	 
 	 </th>
 	 <th>${b.writer}</th>

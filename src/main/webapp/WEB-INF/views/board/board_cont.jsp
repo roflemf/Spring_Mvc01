@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,6 +46,7 @@
     onclick="location='/controller/board/board_cont?bno=${b.bno}&page=${page}&state=edit';">
     <%--stae=edit 구분값 때문에 동일 매핑주소를 사용해도 수정폼으로 이동 --%> 
     
+    <c:if test="${b.replycnt ==0 }">
     <input type="button" value="삭제" 
     onclick="if(confirm('정말로 삭제할까요?')==true){
     	location='/controller/board/board_del?bno=${b.bno}&page=${page}';}else{return;}">
@@ -52,6 +54,7 @@
    		확인 클릭시 true 반환, 취소 클릭시 false반환 
    		즉, 확인 클릭시 삭제로 이동, 취소 클릭시 return에 의해 종료 ->현재 내용보기에서 그대로
    		다시 한번 더 삭제 유무 확인하게 함--%>
+   		</c:if>
    		
    		<input type="button" value="목록"
    		onclick="location='/controller/board/board_list?page=${page}';">
@@ -100,6 +103,7 @@
 
 	<br>
 	<hr>
+	[<strong>${b.replycnt}</strong> 개의 댓글]
 	<br>
 
 	<%--댓글목록 --%>
@@ -155,6 +159,7 @@
 				success : function($data) {
 					if ($data == 'SUCCESS') {
 						alert('댓글이 등록되었습니다');
+						location.reload(); //자바스크립트에서 새로고침(F5)
 						getAllList();//댓글 목록 함수 호출
 					}
 				}
@@ -227,6 +232,7 @@
 					if(data == 'SUCCESS'){
 						alert('댓글이 삭제되었습니다!');
 						$('#modDiv').hide('1000');
+						location.reload(); //자바스크립트에서 새로고침(F5)
 						getAllList();//댓글 목록함수 호출
 					}
 				}

@@ -13,4 +13,5 @@ public interface BoardDAO {
 	public void updateHit(int bno);
 	public void editBoard(BoardVO eb);
 	public void delBoard(int bno);
+	public void updateReplyCnt(int bno, int count);
 }

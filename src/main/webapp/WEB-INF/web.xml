@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+	1.Spring Legacy Project(Spring Mvc Project)는 서블릿 버전이 2.5이기 때문에 xml 네임스페이스를 
+		2.5에서 3.1로 수정한다.
+		
+	2.톰캣 서버 7.0부터는 서블릿 3.0이상을 지원하기 때문에 pom.xml에서 파일 첨부 외부 라이브러리를 추가하지 않고도
+		서블릿 자체적인 파일 업로드 api를 사용한다.
+
+ -->
+ 
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+   http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+   id="WebApp_ID" version="3.1">
+
+<!-- 서블릿2.5 주석문 처리
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-
+-->
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -23,6 +40,14 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		
+		<!-- 자료실 기능인 이진파일 업로드 설정 -->
+		<multipart-config>
+			<location>C:\\upload2</location> <!-- 파일 첨부한 이진파일 업로드 서버 경로 -->
+			<max-file-size>20971520</max-file-size> <!-- 1MB*20 = 20MB ; 업로드 되는 최대 파일 크기 -->
+			<max-request-size>41943040</max-request-size><!-- 40MB : 한번에 올릴 수 있는 최대 크기 -->
+			<file-size-threshold>20971520</file-size-threshold><!-- 20MB : 메모리 사용크기 -->
+		</multipart-config>
 	</servlet>
 		
 	<servlet-mapping>

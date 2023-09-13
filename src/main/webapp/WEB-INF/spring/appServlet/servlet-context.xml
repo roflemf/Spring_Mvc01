@@ -31,5 +31,8 @@
 		context:component-scan 인 오토스캔(자동으로 찾음)태그에 의해
 		 이 패키지에 만들어진 컨트롤러는 자동으로 스프링에서 인식-->
 	
+	<!-- 스프링 이진파일 업로드 API 설정 : 첨부파일을 처리하는 빈 아이디 설정 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
 	
 </beans:beans>
