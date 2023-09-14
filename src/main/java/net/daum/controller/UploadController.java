@@ -58,5 +58,43 @@ public class UploadController {//파일첨부(이진파일 업로드) 스프링 
 		return new ModelAndView("uploadAjaxForm");//생성자 인자값으로 뷰페이지 파일명이 들어감
 		//뷰리졸브 경로; /WEB-INF/views/uploadAjaxForm.jsp
 	}//uploadAjax
+	
+	@PostMapping("/uploadAjaxAction") //비동기식 post로 접근하는 매핑주소 uploadAjaxAction을 처리
+	public void uploadAjaxAction(MultipartFile[] uploadFile) {
+		System.out.println("upload ajax post...");
+		String uploadFolder = "C:\\upload2"; //이진할 업로드 서버 경로
+		
+		for(MultipartFile multi:uploadFile) {//향상 확장 for
+			
+			System.out.println("==============================>");
+			System.out.println("첨부된 원본 파일명 : " + multi.getOriginalFilename());
+			System.out.println("첨부된 파일크기 : " + multi.getSize());
+			
+			String uploadFileName = multi.getOriginalFilename();//첨부된 원본파일명
+			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
+			// \\두개인 이유; \하나면 인식 안됌
+			//경로에서 \이후부터 파일명이니까 +1 
+			/* IE(인터넷 익스플로러)인 경우 전체 파일경로가 전송되기 때문에 마지막 경로 구분 \이후부터 마지막 문자까지 구함.
+			 * 즉, 첨부된 실제 파일명만 구함
+			 */
+			System.out.println("only file name : " + uploadFileName);
+			
+			File saveFile = new File(uploadFolder, uploadFileName);
+			
+			try {
+				multi.transferTo(saveFile); //실제 첨부파일 업로드
+			}catch(Exception e) {e.printStackTrace();}
+			
+			/*문제)
+			 * 비동기식으로 하나, 다수개의 다중 첨부 파일이 C:\\upload2폴더에 실제 업로드가 되는지 
+			 * 확인해보고 에러가 나는 경우 디버깅
+			 */
+			
+			
+			
+						
+			
+		}//for
+	}//uploadAjaxAcition()
 
 }

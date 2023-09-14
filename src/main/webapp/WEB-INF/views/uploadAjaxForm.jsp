@@ -24,7 +24,14 @@
  		}
  		
  		$.ajax({
- 			
+ 			url: '/controller/uploadAjaxAction', //서버 매칭주소
+ 			processData: false, //컨텐트 타입에 맞게 반환여부 (다른타입 파일도 받기 위해 false)
+ 			contentType: false, //요청 컨텐트 타입
+ 			data: formData, //폼데이터 객체 전송
+ 			type: 'POST', //보내는 방식
+ 			success: function(result){
+ 				
+ 			}
  			
  		});//비동기식 jQuery 아작스 함수
  	});
@@ -36,6 +43,8 @@
 </script>
 </head>
 <body>
-
+<h1>Upload with Ajax</h1>
+<input type="file" name ="uploadFile" multiple>
+<button type="button" id="uploadBtn">File Upload</button>
 </body>
 </html>
